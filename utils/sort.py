@@ -26,3 +26,5 @@ def sort (args) :
     else : 
       seq_sort = sorted (list (seq_index.values ()), key = lambda x : len (x.seq), reverse = False)
     SeqIO.write (seq_sort, args.fout, "fasta")
+  if Path (f"{Path(args.fin).name}_temp").is_file () :
+    subprocess.run (f"rm {Path(args.fin).name}_temp", shell = True, check = True)

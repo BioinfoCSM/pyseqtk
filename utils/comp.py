@@ -39,3 +39,5 @@ def comp (args) :
       cg_num = sr.seq.upper ().count ("CG")
       mystr = "\t".join ([idx, str (seq_len), str (a_num), str (c_num), str (g_num), str (t_num), str (u_num), str (others_num), str (cg_num)]) + "\n"
       fw.write (mystr)
+  if Path (f"{Path(args.fin).name}_temp").is_file () : 
+    subprocess.run (f"rm {Path(args.fin).name}_temp", shell = True, check = True)

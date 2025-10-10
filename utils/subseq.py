@@ -34,7 +34,8 @@ class main :
       SeqIO.write (sr_list, self.args.fout, "fasta")
     else : 
       SeqIO.write (sr_list, self.args.fout, "fastq")
-    subprocess.run (f"{Path (self.args.fin).name}_temp", shell = True, check = True)
+    if Path (f"{Path(self.args.fin).name}_temp").is_file () :
+      subprocess.run (f"rm {Path(self.args.fin).name}_temp", shell = True, check = True)
 
   #===extract sequence by id bed===
   def subseq_id_bed (self) : 
@@ -62,6 +63,8 @@ class main :
           SeqIO.write (sr_list, self.args.fout, "fasta")
         else : 
           SeqIO.write (sr_list, self.args.fout, "fastq")
+    if Path (f"{Path(self.args.fin).name}_temp").is_file () :
+      subprocess.run (f"rm {Path(self.args.fin).name}_temp", shell = True, check = True)
 
 
 def excute (args) : 
