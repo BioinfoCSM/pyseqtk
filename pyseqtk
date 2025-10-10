@@ -1,0 +1,79 @@
+#!/usr/bin/env python
+
+import argparse
+from pathlib import Path
+from utils import sample
+from utils import sort
+from utils import shuffle
+from utils import subseq
+from utils import find
+from utils import size
+from utils import comp
+
+def command () : 
+  #===parser object===
+  parser = argparse.ArgumentParser (description = "A toolkit for processing FASTA/Q files")
+  subparser = parser.add_subparsers (description = f"python {Path (__file__).name} <subcommand> <arguments>", dest = "subcommand")
+  subparser.required = True
+
+  #===subcommand:sample===
+  subparser_sample = subparser.add_parser ("sample", help = "subsample sequences")
+  subparser_sample.add_argument ("--fmt", type = str, help = "the format of input file(default:fasta)", required = False, default = "fasta", choices = ["fasta", "fastq"])
+  subparser_sample.add_argument ("--fin", type = str, help = "input file path", required = True)
+  subparser_sample.add_argument ("-s", "--seed", type = int, help = "random seed(default:123)", required = False, default = 123)
+  subparser_sample.add_argument ("-n", "--num", type = int, help = "number of sampling(num>=1)", required = False)
+  subparser_sample.add_argument ("-f", "--frac", type = float, help = "fraction of sampling(0<frac<1)", required = False)
+  subparser_sample.add_argument ("--fout", type = str, help = "output file path", required = True)
+  subparser_sample.set_defaults (func = sample.execute) 
+
+  #===subcommand:sort===
+  subparser_sort = subparser.add_parser ("sort", help = "sort by sequence length")
+  subparser_sort.add_argument ("--fin", type = str, help = "input file path", required = True)
+  subparser_sort.add_argument ("-r", "--reverse", action = "store_true", help = "whether to sort in descending order", required = False)
+  subparser_sort.add_argument ("--fout", type = str, help = "output file path", required = True)
+  subparser_sort.set_defaults (func = sort.sort)
+
+  #===subcommand:shuffle===
+  subparser_shuffle = subparser.add_parser ("shuffle", help = "shuffle the sequence")
+  subparser_shuffle.add_argument ("--fin", type = str, help = "input file path", required = True)
+  subparser_shuffle.add_argument ("--fout", type = str, help = "output file path", required = True)
+  subparser_shuffle.set_defaults (func = shuffle.shuffle)
+
+  #===subcommand:subseq===
+  subparser_subseq = subparser.add_parser ("subseq", help = "extract subsequences from FASTA/Q")
+  subparser_subseq.add_argument ("--fmt", type = str, help = "the format of input file(default:fasta)", required = False, default = "fasta", choices = ["fasta", "fastq"])
+  subparser_subseq.add_argument ("--fin", type = str, help = "input file path", required = True)
+  subparser_subseq.add_argument ("-l", "--list", type = str, help = "id list file path(one id per line)(--list and --bed are mutually exclusive)", required = False)
+  subparser_subseq.add_argument ("-b", "--bed", type = str, help = "id bed file path(one id per line)(--list and --bed are mutually exclusive)", required = False)
+  subparser_subseq.add_argument ("--fout", type = str, help = "output file path", required = True)
+  subparser_subseq.set_defaults (func = subseq.excute)
+ 
+  #===subcommand:find===
+  subparser_find = subparser.add_parser ("find", help = "find sequences by sequence")
+  subparser_find.add_argument ("--fin", type = str, help = "input file path", required = True)
+  subparser_find.add_argument ("-p", "--pattern", type = str, help = "a sequence", required = True)
+  subparser_find.add_argument ("--fout", type = str, help = "output file path", required = True)
+  subparser_find.set_defaults (func = find.find)
+
+  #===subcommand:size===
+  subparser_size = subparser.add_parser ("size", help = "report the number of sequences and bases")
+  subparser_size.add_argument ("--fmt", type = str, help = "the format of input file(default:fasta)", required = False, default = "fasta", choices = ["fasta", "fastq"]) 
+  subparser_size.add_argument ("--fin", type = str, help = "input file path", required = True)
+  subparser_size.set_defaults (func = size.size)
+
+  #===subcommand:comp===
+  subparser_comp = subparser.add_parser ("comp", help = "get the nucleotide composition of FASTA/Q")
+  subparser_comp.add_argument ("--fmt", type = str, help = "the format of input file(default:fasta)", required = False, default = "fasta", choices = ["fasta", "fastq"])
+  subparser_comp.add_argument ("--fin", type = str, help = "input file path", required = True)
+  subparser_comp.add_argument ("--fout", type = str, help = "output file path(tab-seperated)", required = True)
+  subparser_comp.set_defaults (func = comp.comp)
+
+  #===parse argument===
+  args = parser.parse_args ()
+
+  #===execute===
+  args.func (args = args)
+
+
+if __name__ == "__main__" : 
+  command ()
