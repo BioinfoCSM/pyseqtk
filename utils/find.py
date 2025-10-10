@@ -24,4 +24,3 @@ def find (args) :
       sr = SeqRecord (id = seq_index[k].id, description = f"start_position:{start+1}", seq = seq_index[k].seq)
       sr_list.append (sr)
       SeqIO.write (sr_list, args.fout, "fasta")
-  subprocess.run (f"rm {Path (args.fin).name}_temp", shell = True, check = True)

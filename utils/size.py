@@ -30,4 +30,3 @@ def size (args) :
   mystr = f"""number of sequences : {seq_num}
 number of bases : {base_num}"""
   print (mystr)
-  subprocess.run (f"rm {Path(args.fin).name}_temp", shell = True, check = True)

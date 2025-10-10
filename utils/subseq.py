@@ -62,7 +62,6 @@ class main :
           SeqIO.write (sr_list, self.args.fout, "fasta")
         else : 
           SeqIO.write (sr_list, self.args.fout, "fastq")
-    subprocess.run (f"{Path (self.args.fin).name}_temp", shell = True, check = True)
 
 
 def excute (args) : 
