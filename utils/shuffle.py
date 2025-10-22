@@ -4,6 +4,7 @@ import random
 import subprocess
 from Bio import SeqIO
 from pathlib import Path
+from utils.gunzip import gunzip
  
 def shuffle (args) : 
   try : 
