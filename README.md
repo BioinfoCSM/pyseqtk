@@ -2,7 +2,7 @@
 python>=3.7
 ***
 # Description
-A toolkit for processing FASTA/Q files
+A python implementation of seqtk-lightweigth tools for processing biological sequences in FASTA/Q format.
 # Deployment
 ## clone
 ```
@@ -24,7 +24,7 @@ pip install pandas
 pyseqtk -h
 ```
 ```
-usage: pyseqtk [-h] {sample,sort,shuffle,subseq,find,size,comp} ...
+usage: pyseqtk [-h] {sample,sort,shuffle,subseq,find,size,comp,fqchk,mergepe} ...
 
 A toolkit for processing FASTA/Q files
 
@@ -34,7 +34,7 @@ options:
 subcommands:
   python pyseqtk <subcommand> <arguments>
 
-  {sample,sort,shuffle,subseq,find,size,comp}
+  {sample,sort,shuffle,subseq,find,size,comp,fqchk,mergepe}
     sample              subsample sequences
     sort                sort by sequence length
     shuffle             shuffle the sequence
@@ -42,6 +42,8 @@ subcommands:
     find                find sequences by sequence
     size                report the number of sequences and bases
     comp                get the nucleotide composition of FASTA/Q
+    fqchk               fastq QC (base/quality summary)
+    mergepe             interleave two PE FASTA/Q files
 ```
 ***
 # Info
