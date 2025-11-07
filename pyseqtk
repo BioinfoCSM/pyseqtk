@@ -9,6 +9,8 @@ from utils import subseq
 from utils import find
 from utils import size
 from utils import comp
+from utils import fqchk
+from utils import mergepe
 
 def command () : 
   #===parser object===
@@ -67,6 +69,20 @@ def command () :
   subparser_comp.add_argument ("--fin", type = str, help = "input file path", required = True)
   subparser_comp.add_argument ("--fout", type = str, help = "output file path(tab-seperated)", required = True)
   subparser_comp.set_defaults (func = comp.comp)
+
+  #===subcommand:fqchk===
+  subparser_fqchk = subparser.add_parser ("fqchk", help = "fastq QC (base/quality summary)")
+  subparser_fqchk.add_argument ("--fin", type = str, help = "input file path", required = True)
+  subparser_fqchk.add_argument ("-q", "--quality", type = int, help = "the quality value that a base is qualified,default 20 means phred quality >= Q20 is qualified", required = False, default = 20)
+  subparser_fqchk.add_argument ("--fout", type = str, help = "output file path(tab-seperated)", required = True)
+  subparser_fqchk.set_defaults (func = fqchk.execute)
+
+  #===subcommand:mergepe===
+  subparser_mergepe = subparser.add_parser ("mergepe", help = "interleave two PE FASTA/Q files")
+  subparser_mergepe.add_argument ("--fq1", type = str, help = "first fastq", required = True)
+  subparser_mergepe.add_argument ("--fq2", type = str, help = "second fastq", required = True)
+  subparser_mergepe.add_argument ("--fout", type = str, help = "output file path(tab-seperated)", required = True)
+  subparser_mergepe.set_defaults (func = mergepe.mergepe)
 
   #===parse argument===
   args = parser.parse_args ()

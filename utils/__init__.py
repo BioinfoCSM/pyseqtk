@@ -5,3 +5,4 @@ from . import subseq
 from . import find
 from . import size
 from . import comp
+from . import fqchk
